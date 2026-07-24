@@ -1,0 +1,18 @@
+{
+  "name": "dingtalk-minutes-to-obsidian",
+  "version": "0.1.0",
+  "description": "Sync DingTalk AI Minutes into Obsidian through dws.",
+  "main": "main.js",
+  "scripts": {
+    "dev": "node esbuild.config.mjs",
+    "build": "tsc --noEmit && node esbuild.config.mjs production"
+  },
+  "keywords": ["obsidian", "dingtalk", "minutes"],
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "^18.19.0",
+    "esbuild": "^0.21.5",
+    "obsidian": "latest",
+    "typescript": "^5.5.4"
+  }
+}
