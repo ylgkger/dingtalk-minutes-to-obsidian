@@ -1,7 +1,7 @@
 {
   "id": "dingtalk-minutes-sync",
   "name": "DingTalk Minutes Sync",
-	"version": "0.1.1",
+	"version": "1.0.0",
   "minAppVersion": "1.5.0",
   "description": "Sync DingTalk AI Minutes to Markdown using the locally authenticated dws CLI.",
   "author": "Local",
