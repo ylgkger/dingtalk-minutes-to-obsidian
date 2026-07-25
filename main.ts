@@ -227,7 +227,7 @@ class MinutesSettingsTab extends PluginSettingTab {
   display(): void {
     const { containerEl } = this;
     containerEl.empty();
-    containerEl.createEl('h2', { text: 'DingTalk AI Minutes Sync' });
+    new Setting(containerEl).setName('DingTalk AI Minutes Sync').setHeading();
     containerEl.createEl('p', { text: '需要在此电脑安装并登录 dws；插件不会保存钉钉密码、Cookie 或 AppSecret。' });
     new Setting(containerEl).setName('dws 路径').setDesc('留空或填 dws 时，会自动识别 ~/.local/bin/dws、/opt/homebrew/bin/dws 和 /usr/local/bin/dws；也可填写绝对路径。').addText(t => t.setValue(this.plugin.settings.dwsPath).onChange(async v => { this.plugin.settings.dwsPath = v; await this.plugin.saveSettings(); }));
     new Setting(containerEl).setName('同步目录').addText(t => t.setValue(this.plugin.settings.targetFolder).onChange(async v => { this.plugin.settings.targetFolder = v || DEFAULT_SETTINGS.targetFolder; await this.plugin.saveSettings(); }));

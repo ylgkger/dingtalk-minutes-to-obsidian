@@ -1,21 +1,43 @@
 # DingTalk Minutes Sync for Obsidian
 
-将钉钉 AI 听记同步为 Obsidian Markdown 笔记的桌面端插件。
+**DingTalk Minutes Sync** imports DingTalk AI Minutes into an Obsidian vault as readable Markdown notes. It runs on desktop Obsidian and uses the locally authenticated [DingTalk Workspace CLI](https://github.com/DingTalk-Real-AI/dingtalk-workspace-cli) (`dws`) to access your own DingTalk data.
 
-## 功能
+## Features
 
-- 同步 AI 摘要、关键词、待办和可选逐字稿
-- 使用听记实际开始时间命名文件
-- 支持 7 天、30 天或一年的首次同步范围
-- 通过本机已登录的 `dws` 访问钉钉，不保存密码、Cookie 或 AppSecret
-- 逐字稿不可用时仍同步其他内容
+- Imports AI summaries, keywords, action items, and optional transcripts.
+- Names notes with the actual meeting start date, not the sync date.
+- Supports 7-day, 30-day, and one-year initial sync ranges.
+- Supports manual sync, sync-on-startup, and scheduled sync.
+- Preserves existing notes when the DingTalk transcript API is unavailable.
+- Stores no DingTalk password, cookie, or AppSecret.
 
-## 安装
+## Requirements
 
-1. 安装并登录 [DingTalk Workspace CLI](https://github.com/DingTalk-Real-AI/dingtalk-workspace-cli)。
-2. 将 `main.js`、`manifest.json` 与 `styles.css` 放入 Obsidian Vault 的 `.obsidian/plugins/dingtalk-minutes-sync/`。
-3. 重启 Obsidian，在第三方插件设置中启用 **DingTalk Minutes Sync**。
+- Obsidian desktop 1.5.0 or later.
+- DingTalk Workspace CLI installed and authenticated on the same computer.
+- Access to DingTalk AI Minutes in your DingTalk account.
 
-## 限制
+## Installation
 
-插件依赖本机 CLI，因此仅支持 Obsidian 桌面端。钉钉未返回逐字稿的个别听记会保留摘要、关键词与待办，并在笔记中说明逐字稿不可用。
+1. Download `main.js`, `manifest.json`, and `styles.css` from the latest GitHub release.
+2. Create the folder `<your-vault>/.obsidian/plugins/dingtalk-minutes-sync/`.
+3. Copy the three downloaded files into that folder.
+4. Restart Obsidian, open **Settings → Community plugins**, and enable **DingTalk Minutes Sync**.
+
+## Usage
+
+1. Open **Settings → DingTalk Minutes Sync**.
+2. Leave **dws path** as `dws` unless it is installed in a custom location. The plugin automatically detects common macOS locations, including `~/.local/bin/dws`.
+3. Select the sync scope and initial date range.
+4. Choose whether to include transcripts.
+5. Click **Sync now** or run **Sync DingTalk AI Minutes now** from the command palette.
+
+Notes are written to the configured `DingTalk Minutes` folder. Every note includes frontmatter with the source task UUID, the actual meeting start time, and the sync time.
+
+## Limitations
+
+This plugin is desktop-only because it invokes a local CLI. DingTalk occasionally does not provide a transcript for a meeting; in that case, the note still includes the available summary, keywords, and action items.
+
+## License
+
+This project is released under the [MIT License](LICENSE).
