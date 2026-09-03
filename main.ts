@@ -144,7 +144,7 @@ export default class DingTalkMinutesSyncPlugin extends Plugin {
   }
 
   async sync(): Promise<void> {
-    const notice = new Notice('正在同步钉钉 AI 听记…', 0);
+    const notice = new Notice('正在同步钉钉 AI 听记…', 10_000);
     try {
       const client = new DwsMinutesClient(resolveDwsPath(this.settings.dwsPath));
       if (!this.settings.initialSyncStart) {
@@ -195,10 +195,11 @@ export default class DingTalkMinutesSyncPlugin extends Plugin {
       this.settings.lastSyncAt = Date.now();
       await this.saveData(this.settings);
       notice.setMessage(`钉钉听记同步完成：新增 ${created}，更新 ${updated}，未变更 ${skipped}${transcriptUnavailable ? `；${transcriptUnavailable} 条逐字稿不可用` : ''}。`);
-      window.setTimeout(() => notice.hide(), 5000);
+      window.setTimeout(() => notice.hide(), 5_000);
     } catch (error) {
       console.error('DingTalk Minutes sync failed', error);
       notice.setMessage(error instanceof Error ? error.message : String(error));
+      window.setTimeout(() => notice.hide(), 8_000);
     }
   }
 
