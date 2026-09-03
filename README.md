@@ -38,6 +38,13 @@ Notes are written to the configured `DingTalk Minutes` folder. Every note includ
 
 This plugin is desktop-only because it invokes a local CLI. DingTalk occasionally does not provide a transcript for a meeting; in that case, the note still includes the available summary, keywords, and action items.
 
+## Data access and privacy
+
+- **DingTalk account access:** You must install and sign in to the DingTalk Workspace CLI (`dws`) yourself. The plugin does not collect, store, or transmit your DingTalk password, cookie, or AppSecret.
+- **Network use:** When you start a sync, the local `dws` CLI makes authorized requests to DingTalk to list and retrieve your AI Minutes. This is solely to download the minutes you chose to sync.
+- **Files outside the vault:** The plugin launches the local `dws` executable and relies on its existing local sign-in profile, which is stored outside the Obsidian vault. It writes the resulting Markdown notes only to the folder you configure inside your vault.
+- **No telemetry:** The plugin has no analytics, telemetry, or separate remote service. It does not upload your vault notes anywhere.
+
 ## License
 
 This project is released under the [MIT License](LICENSE).
