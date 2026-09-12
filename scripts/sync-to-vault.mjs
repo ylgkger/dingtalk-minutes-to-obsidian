@@ -20,20 +20,20 @@ async function call(args) {
 
 async function listAll() {
   const records = [];
-  const seenTokens = new Set();
-  let nextToken;
+  const seenCursors = new Set();
+  let cursor;
   do {
     const args = ['minutes', 'list', 'all', '--start', start, '--max', '30'];
-    if (nextToken) args.push('--next-token', nextToken);
+    if (cursor) args.push('--cursor', cursor);
     const result = await call(args);
     records.push(...(result.itemList || []));
-    nextToken = result.nextToken;
-    if (nextToken && seenTokens.has(nextToken)) {
-      console.warn('dws returned a repeated list token; stopping pagination safely.');
+    cursor = result.cursor || result.nextToken || result.next_token;
+    if (cursor && seenCursors.has(cursor)) {
+      console.warn('dws returned a repeated list cursor; stopping pagination safely.');
       break;
     }
-    if (nextToken) seenTokens.add(nextToken);
-  } while (nextToken);
+    if (cursor) seenCursors.add(cursor);
+  } while (cursor);
   return records;
 }
 

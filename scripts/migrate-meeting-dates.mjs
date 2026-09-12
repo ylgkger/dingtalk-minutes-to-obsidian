@@ -12,18 +12,18 @@ const dws = process.env.DWS_PATH || path.join(process.env.HOME || '', '.local/bi
 
 async function list() {
   const items = [];
-  const seen = new Set();
-  let token;
+  const seenCursors = new Set();
+  let cursor;
   do {
     const args = ['minutes', 'list', 'all', '--start', start, '--max', '30', '--format', 'json'];
-    if (token) args.push('--next-token', token);
+    if (cursor) args.push('--cursor', cursor);
     const { stdout } = await execFileAsync(dws, args);
     const result = JSON.parse(stdout).result;
     items.push(...(result.itemList || []));
-    token = result.nextToken;
-    if (token && seen.has(token)) break;
-    if (token) seen.add(token);
-  } while (token);
+    cursor = result.cursor || result.nextToken || result.next_token;
+    if (cursor && seenCursors.has(cursor)) break;
+    if (cursor) seenCursors.add(cursor);
+  } while (cursor);
   return items;
 }
 

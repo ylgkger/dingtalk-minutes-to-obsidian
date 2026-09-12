@@ -41,21 +41,23 @@ class DwsMinutesClient {
 
   async list(scope: MinutesSettings['scope'], start?: string): Promise<JsonObject[]> {
     const items: JsonObject[] = [];
-    const seenTokens = new Set<string>();
-    let nextToken: string | undefined;
+    const seenCursors = new Set<string>();
+    let cursor: string | undefined;
     do {
       const args = ['minutes', 'list', scope, '--max', '30', '--format', 'json'];
       if (start) args.push('--start', start);
-      if (nextToken) args.push('--next-token', nextToken);
+      // `minutes list` paginates with --cursor. `--next-token` is only valid
+      // for the transcript endpoint.
+      if (cursor) args.push('--cursor', cursor);
       const payload = await this.run(args);
       items.push(...this.items(payload));
-      nextToken = this.nextToken(payload);
-      if (nextToken && seenTokens.has(nextToken)) {
-        console.warn('dws returned a repeated minutes list token; stopping pagination safely.');
+      cursor = this.nextToken(payload);
+      if (cursor && seenCursors.has(cursor)) {
+        console.warn('dws returned a repeated minutes list cursor; stopping pagination safely.');
         break;
       }
-      if (nextToken) seenTokens.add(nextToken);
-    } while (nextToken);
+      if (cursor) seenCursors.add(cursor);
+    } while (cursor);
     return items;
   }
 
