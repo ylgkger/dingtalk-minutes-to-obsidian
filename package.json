@@ -1,6 +1,6 @@
 {
   "name": "dingtalk-minutes-to-obsidian",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Sync DingTalk AI Minutes into Obsidian through dws.",
   "main": "main.js",
   "scripts": {
